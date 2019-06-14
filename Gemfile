@@ -48,6 +48,8 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'rubocop', '~> 0.71.0'
+  gem 'rspec-rails', '~> 3.8', '>= 3.8.2'
 end
 
 group :test do
@@ -62,6 +64,4 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'devise'
-gem 'rubocop', '~> 0.71.0'
-gem 'rspec-rails', '~> 3.8', '>= 3.8.2'
 gem "shrine", "~> 2.0"
