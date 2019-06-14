@@ -63,5 +63,5 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'devise'
 gem 'rubocop', '~> 0.71.0'
-gem 'rspec', '~> 3.8'
+gem 'rspec-rails', '~> 3.8', '>= 3.8.2'
 gem "shrine", "~> 2.0"
