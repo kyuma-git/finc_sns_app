@@ -12,6 +12,6 @@
 <% if @user.id == current_user.id %>
   <%= link_to '編集', edit_user_registration_path(@user) %> |
 <% else %>
-  <button>フォローする</button>
+  <%= render 'follow_form' %>
 <% end %>
 <%= link_to 'ホームへ戻る', posts_path %>

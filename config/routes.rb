@@ -12,8 +12,15 @@ Rails.application.routes.draw do
   get 'users/show'
   get 'users/new'
 
-  resources :users
+  resources :users do
+    member do
+    #フォロワー一覧のパス（余裕があったら追加する）
+    #  get :following, :followers
+    end
+  end
+
   resources :posts
   resources :comments
+  resources :relationships, only: [:create, :destroy]
 
 end
