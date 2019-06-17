@@ -1,26 +1,24 @@
-Rails.application.routes.draw do
+# frozen_string_literal: true
 
+Rails.application.routes.draw do
   devise_for :users, controllers: {
     confirmations: 'users/confirmations',
-    passwords:     'users/passwords',
+    passwords: 'users/passwords',
     registrations: 'users/registrations',
-    sessions:      'users/sessions'
+    sessions: 'users/sessions'
   }
 
-  root :to => 'posts#index'
-
-  get 'users/show'
-  get 'users/new'
+  root to: 'posts#index'
 
   resources :users do
     member do
-    #フォロワー一覧のパス（余裕があったら追加する）
-    #  get :following, :followers
+      # フォロワー一覧のパス（余裕があったら追加する）
+      #  get :following, :followers
     end
   end
 
-  resources :posts
-  resources :comments
-  resources :relationships, only: [:create, :destroy]
-
+  resources :posts do
+    resources :comments
+  end
+  resources :relationships, only: %i[create destroy]
 end

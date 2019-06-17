@@ -13,3 +13,8 @@
  *= require_tree .
  *= require_self
  */
+
+ .require::after {
+  content: "  ※ 必須項目";
+  color: rgb(214, 89, 89);
+}

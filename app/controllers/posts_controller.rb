@@ -1,12 +1,17 @@
+# frozen_string_literal: true
+
 class PostsController < ApplicationController
   before_action :check_user_login, only: [:new, :edit, :delete]
-  before_action :set_post, only: [:show, :edit,:update, :destroy]
   def index
-    user = User.find_by(params[:user_id])
-    @posts = user.feed
+    if current_user
+      @posts = current_user.feed.order(created_at: :desc)
+    else
+      @posts = Post.all.order(created_at: :desc)
+    end
   end
 
   def show
+    @post = Post.find(params[:id])
   end
 
   def new
@@ -23,26 +28,25 @@ class PostsController < ApplicationController
   end
 
   def edit
+    @post = Post.find(params[:id])
   end
 
   def update
-      if @post.update(post_params)
-        redirect_to @post, notice: '編集できました'
-      else
-        render :edit
-      end
+    @post = Post.find(params[:id])
+    if @post.update(post_params)
+      redirect_to @post, notice: '編集できました'
+    else
+      render :edit
+    end
   end
 
   def destroy
+    @post = Post.find(params[:id])
     @post.destroy
     redirect_to posts_url, notice: '削除できました'
   end
 
   private
-
-  def set_post
-    @post = Post.find(params[:id])
-  end
 
   def post_params
     params.require(:post).permit(
@@ -52,5 +56,4 @@ class PostsController < ApplicationController
       :updated_at
     ).merge(user_id: current_user.id)
   end
-
 end

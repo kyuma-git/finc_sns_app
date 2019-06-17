@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
@@ -13,7 +15,7 @@ class UsersController < ApplicationController
     destroy_user_session_path
   end
 
-#####################################################################
+  #####################################################################
   # Todo: フォローしてるユーザ、フォローしてるユーザの取得（余裕があったら作る）
   # def following
   #     @user  = User.find(params[:id])
@@ -26,6 +28,5 @@ class UsersController < ApplicationController
   #   @users = @user.followers
   #   render 'show_follower'
   # end
-#####################################################################
-
+  #####################################################################
 end
