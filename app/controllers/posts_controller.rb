@@ -2,8 +2,8 @@ class PostsController < ApplicationController
   before_action :check_user_login, only: [:new, :edit, :delete]
   before_action :set_post, only: [:show, :edit,:update, :destroy]
   def index
-    #Todo: ログインしてる場合、フォローしてるユーザの投稿が表示されるほうに
-    @posts = Post.all.includes(:user)
+    user = User.find_by(params[:user_id])
+    @posts = user.feed
   end
 
   def show

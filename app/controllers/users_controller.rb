@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
+    # このユーザのポスト一覧（余裕があったら作る）
+    # @posts = @user.posts.paginate(page: params[:page])
   end
 
   def new
