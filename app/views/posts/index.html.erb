@@ -1,63 +1,21 @@
-<% if user_signed_in? %>
-<h1>フォローしているユーザの投稿一覧</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>投稿内容</th>
-      <th>公開設定</th>
-      <th>投稿主</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @posts.each do |post| %>
-      <tr>
-        <td><%= post.text %></td>
-        <td><%= post.browse_status %></td>
-        <td>
-          <%= link_to user_path(post.user) do %>
-            <%= post.user.name %>
-          <% end %>
-        </td>
-        <td><%= link_to '投稿詳細', post_path(post) %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to '今何してる？', new_post_path %>
-
-<% else %>
-
-<h1>全ユーザの投稿一覧</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>投稿内容</th>
-      <th>公開設定</th>
-      <th>投稿主</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @posts.each do |post| %>
-      <tr>
-        <td><%= post.text %></td>
-        <td><%= post.browse_status %></td>
-        <td><%= post.user_id %></td>
-        <td><%= link_to '投稿詳細', post_path(post) %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
+<% @posts.each do |post| %>
+    <div class="card m-2" style="width: 50%; min-height: 250px; position:relative; left: 25%;">
+      <div class="card-body">
+        <div class="row" style="padding: 0 16px;">
+          <div class="col-md-10">
+            <strong class="card-title mb-2">
+              <%= link_to user_path(post.user) do %>
+                <%= post.user.name %>
+              <% end %>
+            </strong>
+          </div>
+          <div class="col-md-2">
+            <%= link_to(post_path(post)) do %>
+              <button type="button" class="btn btn-light" style="font-size: 10px;">詳細</button>
+            <% end %>
+          </div>
+        </div>
+        <p class="card-text p-3"><%= post.text %></p>
+      </div>
+    </div>
 <% end %>
-
