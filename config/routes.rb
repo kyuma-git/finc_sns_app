@@ -24,6 +24,4 @@ Rails.application.routes.draw do
     end
   end
   resources :relationships, only: [:create,  :destroy]
-  # resources :post_likes, only: [:create, :destroy]
-  # resources :comment_likes, only: [:create, :destroy]
 end
