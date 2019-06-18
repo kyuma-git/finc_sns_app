@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class CommentsController < ApplicationController
-  before_action :check_user_login, only: [:new, :edit, :delete]
+  before_action :check_user_login, only: %i[new edit delete]
 
   def new
     @comment = Comment.new
