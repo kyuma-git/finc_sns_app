@@ -5,6 +5,7 @@ class PostsController < ApplicationController
   def index
     if current_user
       @posts = current_user.feed.order(created_at: :desc)
+      @comment = Comment.all
     else
       @posts = Post.all.order(created_at: :desc)
     end
@@ -12,6 +13,8 @@ class PostsController < ApplicationController
 
   def show
     @post = Post.find(params[:id])
+    @comments = @post.comments
+    @comment = Comment.new
   end
 
   def new
@@ -51,7 +54,7 @@ class PostsController < ApplicationController
   def post_params
     params.require(:post).permit(
       :text,
-      :browse_status,
+      :publishing_policy,
       :created_at,
       :updated_at
     ).merge(user_id: current_user.id)

@@ -17,12 +17,11 @@
   </div>
 
   <div class="field">
-    <%= form.label :browse_status %>
-     <%= form.select :browse_status, Post.browse_statuses.keys,{selected: '公開'} %>
+    <%= form.label :publishing_policy %>
+     <%= form.select :publishing_policy, Post.publishing_policies.keys,{selected: 'unlimited'} %>
   </div>
 
   <div class="actions">
     <%= form.submit %>
   </div>
 <% end %>
-

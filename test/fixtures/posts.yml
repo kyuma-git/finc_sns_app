@@ -2,10 +2,10 @@
 
 one:
   text: MyString
-  browse_status: 1
+  publishing_policy: 1
   user_id: 1
 
 two:
   text: MyString
-  browse_status: 1
+  publishing_policy: 1
   user_id: 1

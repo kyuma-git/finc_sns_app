@@ -1,21 +1,30 @@
 <% @posts.each do |post| %>
-    <div class="card m-2" style="width: 50%; min-height: 250px; position:relative; left: 25%;">
-      <div class="card-body">
-        <div class="row" style="padding: 0 16px;">
-          <div class="col-md-10">
-            <strong class="card-title mb-2">
-              <%= link_to user_path(post.user) do %>
-                <%= post.user.name %>
-              <% end %>
-            </strong>
-          </div>
-          <div class="col-md-2">
-            <%= link_to(post_path(post)) do %>
-              <button type="button" class="btn btn-light" style="font-size: 10px;">詳細</button>
+  <div class="card m-2" style="width: 50%; min-height: 250px; position:relative; left: 25%;">
+    <div class="card-body">
+      <div class="row" style="padding: 0 16px;">
+        <div class="col-md-10">
+          <strong class="card-title mb-2">
+            <%= link_to user_path(post.user) do %>
+              <%= post.user.name %>
             <% end %>
-          </div>
+          </strong>
         </div>
-        <p class="card-text p-3"><%= post.text %></p>
+        <div class="col-md-2">
+          <%= link_to(post_path(post)) do %>
+            <button type="button" class="btn btn-light" style="font-size: 10px;">詳細</button>
+          <% end %>
+        </div>
       </div>
+      <div class="card-text p-3 mt-1 bg-light" style="min-height: 180px;"><%= post.text %></div>
+      <% count_comments = post.comments.length %>
+      <% if count_comments > 1 %>
+        <span>
+          <%= count_comments %>
+          件のコメント
+        </span>
+        <%= link_to 'コメントを表示', post_path(post) %>
+      <% end %>
+      <%= link_to 'コメントを追加', new_post_comment_path(post) %>
     </div>
+  </div>
 <% end %>

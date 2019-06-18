@@ -9,5 +9,5 @@ class Post < ApplicationRecord
 
   validates :text, presence: true
 
-  enum browse_status: { unlimited: 1, friend_friend: 2, self_limited: 3 }
+  enum publishing_policy: { unlimited: 1, friend_limited: 2, self_limited: 3 }
 end
