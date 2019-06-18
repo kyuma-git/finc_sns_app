@@ -34,6 +34,9 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id])
   end
 
+  #####################################
+  #Todo: Like機能作成後、ポスト・コメントの削除でLikeが削除されるか確認
+  #####################################
   def update
     @post = Post.find(params[:id])
     if @post.update(post_params)
