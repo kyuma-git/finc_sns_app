@@ -9,9 +9,7 @@ class CommentsController < ApplicationController
 
   def create
     post = Post.find(params[:post_id])
-    unless post then
-      redirect_to post_path(post), alert: 'ポストが存在しません'
-    else
+    unless post.blank?
       @comment = post.comments.build(comment_params)
       if @comment.save
         redirect_to posts_path, notice: 'コメントを投稿しました'
