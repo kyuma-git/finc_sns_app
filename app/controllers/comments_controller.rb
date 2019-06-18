@@ -12,7 +12,7 @@ class CommentsController < ApplicationController
     unless post.blank?
       @comment = post.comments.build(comment_params)
       if @comment.save
-        redirect_to posts_path, notice: 'コメントを投稿しました'
+        redirect_to post_path(post), notice: 'コメントを投稿しました'
       else
         render :new
       end
@@ -20,6 +20,7 @@ class CommentsController < ApplicationController
   end
 
   def edit
+    post = Post.find(params[:post_id])
     @comment = Comment.find(params[:id])
   end
 
@@ -32,13 +33,11 @@ class CommentsController < ApplicationController
     end
   end
 
-  #####################################
-  #Todo: Like機能作成後、ポスト・コメントの削除でLikeが削除されるか確認
-  #####################################
   def destroy
+    post = Post.find(params[:post_id])
     @comment = Comment.find(params[:id])
     @comment.destroy
-    redirect_to posts_path, notice: '削除できました'
+    redirect_to post_path(post), notice: '削除できました'
   end
 
   private

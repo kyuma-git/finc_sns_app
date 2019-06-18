@@ -19,6 +19,11 @@
         </div>
       <% end %>
       <div style="float: right; margin-top: 5px;">
+        <% if @post.postlikes.present? %>
+          <%= button_to 'いいねを取り消す', post_post_like_path(@post), method: :delete %>
+        <% else %>
+          <%= button_to 'いいね', post_post_likes_path(@post), method: :post %>
+        <% end %>
         <%= link_to 'コメントする', new_post_comment_path(@post) %>
         <% if current_user %>
           <% if @post.user_id == current_user.id %>
