@@ -1,0 +1,17 @@
+<p id="notice"><%= notice %></p>
+<p>
+  <strong>
+    <%= @user.name %>
+    さんのプロフィール
+  </strong>  
+</p>
+<p>
+    <%= @user.name %>
+</p>
+
+<% if @user.id == current_user.id %>
+  <%= link_to '編集', edit_user_registration_path(@user) %> |
+<% else %>
+  <%= render 'follow_form' %>
+<% end %>
+<%= link_to 'ホームへ戻る', posts_path %>
