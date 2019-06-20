@@ -12,10 +12,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_190_617_051_642) do
+ActiveRecord::Schema.define(version: 20_190_618_091_108) do
+  create_table 'commentlikes', force: :cascade do |t|
+    t.integer 'user_id'
+    t.integer 'comment_id'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['comment_id'], name: 'index_commentlikes_on_comment_id'
+    t.index ['user_id'], name: 'index_commentlikes_on_user_id'
+  end
+
   create_table 'comments', force: :cascade do |t|
     t.string 'text', null: false
-    t.integer 'browse_status', default: 1
+    t.integer 'publishing_policy', default: 1
     t.integer 'user_id', null: false
     t.integer 'post_id', null: false
     t.datetime 'created_at', null: false
@@ -38,9 +47,18 @@ ActiveRecord::Schema.define(version: 20_190_617_051_642) do
     t.index ['user_id'], name: 'index_likes_on_user_id'
   end
 
+  create_table 'postlikes', force: :cascade do |t|
+    t.integer 'user_id'
+    t.integer 'post_id'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['post_id'], name: 'index_postlikes_on_post_id'
+    t.index ['user_id'], name: 'index_postlikes_on_user_id'
+  end
+
   create_table 'posts', force: :cascade do |t|
     t.string 'text', null: false
-    t.integer 'browse_status', default: 1
+    t.integer 'publishing_policy', default: 1
     t.integer 'user_id', null: false
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false

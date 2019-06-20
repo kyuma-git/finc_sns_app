@@ -1,0 +1,24 @@
+<div id="post_show_page" style="height: 100vh;">
+  <div class="card m-2" style="width: 50%; min-height: 250px; position:relative; left: 25%;">
+    <div class="card-body">
+      <div class="card-text p-3 mt-1 bg-light" style="min-height: 180px;">
+        <%= form_with( model: [:post, comment]) do |form| %>
+          <div class="field">
+            <%= form.label :text, :class => 'require' %>
+            <%= form.text_field :text %>
+          </div>
+          <div class="field">
+            <%= form.label :publishing_policy %>
+            <%= form.select :publishing_policy, Comment.publishing_policies.keys,{selected: 'unlimited'} %>
+          </div>
+          <div class="actions">
+            <%= form.submit %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <span style="float: right;">
+    <%= link_to 'ホームへ戻る', posts_path %>
+  </span>
+</div>
