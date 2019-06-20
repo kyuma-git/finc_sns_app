@@ -13,7 +13,6 @@ class PostsController < ApplicationController
 
   def show
     @post = Post.find(params[:id])
-    @comments = @post.comments
   end
 
   def new
@@ -23,7 +22,7 @@ class PostsController < ApplicationController
   def create
     @post = Post.new(post_params)
     if @post.save
-      redirect_to @post, notice: '投稿できました'
+      redirect_to @post
     else
       render :new
     end
@@ -39,7 +38,7 @@ class PostsController < ApplicationController
   def update
     @post = Post.find(params[:id])
     if @post.update(post_params)
-      redirect_to @post, notice: '編集できました'
+      redirect_to @post
     else
       render :edit
     end
@@ -48,7 +47,7 @@ class PostsController < ApplicationController
   def destroy
     @post = Post.find(params[:id])
     @post.destroy
-    redirect_to posts_url, notice: '削除できました'
+    redirect_to posts_url
   end
 
   private

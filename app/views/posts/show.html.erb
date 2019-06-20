@@ -9,7 +9,7 @@
         </strong>
       </div>
       <div class="card-text p-3 mt-1 bg-light" style="min-height: 180px;"><%= @post.text %></div>
-      <% @comments.each do |comment| %>
+      <% @post.comments.each do |comment| %>
         <div class="card-text p-3 mt-1" style="min-height: 50px; background-color: #FAFAF8;">
           <%= comment.text %>
           <span style="float: right;">
