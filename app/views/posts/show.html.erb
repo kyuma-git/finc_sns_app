@@ -8,6 +8,9 @@
           <% end %>
         </strong>
       </div>
+      <% @post.images.each do |image| %>
+        <%= image_tag(image.image_url(:medium)) %>
+      <% end %>
       <div class="card-text p-3 mt-1 bg-light" style="min-height: 180px;">
         <%= @post.text %>
         <div style="float: right;">

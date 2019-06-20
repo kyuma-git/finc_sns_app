@@ -8,8 +8,8 @@ class CommentsController < ApplicationController
   end
 
   def create
-    post = Post.find(params[:post_id])
-    comment = post.comments.build(comment_params)
+    @post = Post.find(params[:post_id])
+    comment = @post.comments.build(comment_params)
     if comment.save
       redirect_to posts_path
     else
@@ -18,13 +18,12 @@ class CommentsController < ApplicationController
   end
 
   def edit
-    post = Post.find(params[:post_id])
     @comment = Comment.find(params[:id])
   end
 
   def update
-    comment = Comment.find(params[:id])
-    if comment.update(comment_params)
+    @comment = Comment.find(params[:id])
+    if @comment.update(comment_params)
       redirect_to posts_path
     else
       render :edit
@@ -42,7 +41,6 @@ class CommentsController < ApplicationController
   def comment_params
     params.require(:comment).permit(
       :text,
-      :publishing_policy,
       :post_id,
       :created_at,
       :updated_at

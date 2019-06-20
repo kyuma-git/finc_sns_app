@@ -2,14 +2,14 @@
 
 class Post < ApplicationRecord
   belongs_to :user
-
   has_many :comments, dependent: :destroy
-  has_many :images, dependent: :destroy
   has_many :postlikes, dependent: :destroy
+  has_many :images, dependent: :destroy
+  accepts_nested_attributes_for :images
 
   validates :text, presence: true
 
-  enum publishing_policy: { unlimited: 1, friend_limited: 2, self_limited: 3 }
+  enum publishing_policy: { unlimited: 1, follower_limited: 2, self_limited: 3 }
 
   def add_like(user)
     postlikes.create(user_id: user.id)

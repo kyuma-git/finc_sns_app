@@ -66,4 +66,5 @@ end
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 gem 'devise'
-gem 'shrine', '~> 2.0'
+gem 'shrine'
+gem "image_processing"

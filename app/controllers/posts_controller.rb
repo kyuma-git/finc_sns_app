@@ -22,6 +22,7 @@ class PostsController < ApplicationController
 
   def new
     @post = Post.new
+    3.times { @post.images.build }
   end
 
   def create
@@ -37,9 +38,6 @@ class PostsController < ApplicationController
     @post = current_user.feed.find(params[:id])
   end
 
-  #####################################
-  # Todo: Like機能作成後、ポスト・コメントの削除でLikeが削除されるか確認
-  #####################################
   def update
     @post = Post.find(params[:id])
     if @post.update(post_params)
@@ -61,9 +59,9 @@ class PostsController < ApplicationController
     params.require(:post).permit(
       :text,
       :publishing_policy,
-      :image,
       :created_at,
-      :updated_at
+      :updated_at,
+      images_attributes: [:image, :id]
     ).merge(user_id: current_user.id)
   end
 end
