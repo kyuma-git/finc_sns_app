@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class PostsController < ApplicationController
-  before_action :check_user_login, only: [:new, :edit, :delete]
+  before_action :check_user_login, only: %i[new edit delete]
   def index
     if current_user
       @posts = current_user.feed.order(created_at: :desc)
@@ -33,7 +33,7 @@ class PostsController < ApplicationController
   end
 
   #####################################
-  #Todo: Like機能作成後、ポスト・コメントの削除でLikeが削除されるか確認
+  # Todo: Like機能作成後、ポスト・コメントの削除でLikeが削除されるか確認
   #####################################
   def update
     @post = Post.find(params[:id])

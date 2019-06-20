@@ -5,9 +5,17 @@ class Post < ApplicationRecord
 
   has_many :comments, dependent: :destroy
   has_many :images, dependent: :destroy
-  has_many :likes, dependent: :destroy
+  has_many :postlikes, dependent: :destroy
 
   validates :text, presence: true
 
   enum publishing_policy: { unlimited: 1, friend_limited: 2, self_limited: 3 }
+
+  def add_like(user)
+    postlikes.create(user_id: user.id)
+  end
+
+  def delete_like(user)
+    postlikes.find_by(user_id: user.id).destroy
+  end
 end

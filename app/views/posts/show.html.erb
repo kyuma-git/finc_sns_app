@@ -1,32 +1,46 @@
 <div id="post_show_page" style="height: 100vh;">
   <div class="card m-2" style="width: 50%; min-height: 250px; position:relative; left: 25%;">
     <div class="card-body">
-      <div class="row" style="padding: 0 16px;">
+      <div style="padding: 0 16px;">
         <strong class="card-title mb-2">
           <%= link_to user_path(@post.user) do %>
             <%= @post.user.name %>
           <% end %>
         </strong>
       </div>
-      <div class="card-text p-3 mt-1 bg-light" style="min-height: 180px;"><%= @post.text %></div>
-      <% @post.comments.each do |comment| %>
-        <div class="card-text p-3 mt-1" style="min-height: 50px; background-color: #FAFAF8;">
+      <div class="card-text p-3 mt-1 bg-light" style="min-height: 180px;">
+        <%= @post.text %>
+        <div style="float: right;">
+          <% if @post.postlikes.present? %>
+            <%= button_to 'いいねを取り消す', post_post_like_path(@post), method: :delete %>
+          <% else %>
+            <%= button_to 'いいね', post_post_likes_path(@post), method: :post %>
+          <% end %>
+          <% if current_user %>
+            <% if @post.user_id == current_user.id %>
+              <%= link_to '編集', edit_post_path(@post) %>
+              <%= link_to '削除', @post, method: :delete, data: { confirm: '本当に削除しますか？' } %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+       <div class="card-text p-3 mt-1 bg-light" style="min-height: 180px;"><%= @post.text %></div>
+        <% @post.comments.each do |comment| %>
+          <div class="card-text p-3 mt-1" style="min-height: 50px; background-color: #FAFAF8;">
           <%= comment.text %>
           <span style="float: right;">
+            <% if comment.commentlikes.present? %>
+              <%= button_to 'いいねを取り消す', post_comment_comment_like_path(@post, comment), method: :delete %>
+            <% else %>
+              <%= button_to 'いいね', post_comment_comment_likes_path(@post, comment), method: :post %>
+            <% end %>
             <%= link_to '編集', edit_post_comment_path(@post, comment) %>
             <%= link_to '削除', post_comment_path(@post, comment), method: :delete, data: { confirm: '本当に削除しますか？' } %>
           </span>
         </div>
       <% end %>
-      <div style="float: right; margin-top: 5px;">
-        <%= link_to 'コメントする', new_post_comment_path(@post) %>
-        <% if current_user %>
-          <% if @post.user_id == current_user.id %>
-            <%= link_to '編集', edit_post_path(@post) %>
-            <%= link_to '削除', @post, method: :delete, data: { confirm: '本当に削除しますか？' } %>
-            <!-- Todo: Like実装後、Post, Commentのdestroyが動くか確認する -->
-          <% end %>
-        <% end %>
+      <div style=" margin-top: 5px;">
+        <%= link_to 'コメントを追加', new_post_comment_path(@post) %>
       </div>
     </div>
   </div>

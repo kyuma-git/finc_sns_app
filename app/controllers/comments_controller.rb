@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class CommentsController < ApplicationController
-  before_action :check_user_login, only: [:new, :edit, :delete]
+  before_action :check_user_login, only: %i[new edit delete]
 
   def new
     @comment = Comment.new
@@ -18,6 +18,7 @@ class CommentsController < ApplicationController
   end
 
   def edit
+    post = Post.find(params[:post_id])
     @comment = Comment.find(params[:id])
   end
 
@@ -30,9 +31,6 @@ class CommentsController < ApplicationController
     end
   end
 
-  #####################################
-  #Todo: Like機能作成後、ポスト・コメントの削除でLikeが削除されるか確認
-  #####################################
   def destroy
     comment = Comment.find(params[:id])
     comment.destroy
