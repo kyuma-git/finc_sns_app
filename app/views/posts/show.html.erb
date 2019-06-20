@@ -24,8 +24,9 @@
           <% end %>
         </div>
       </div>
-      <% @comments.each do |comment| %>
-        <div class="card-text p-3 mt-1" style="min-height: 80px; background-color: #FAFAF8;">
+       <div class="card-text p-3 mt-1 bg-light" style="min-height: 180px;"><%= @post.text %></div>
+        <% @post.comments.each do |comment| %>
+          <div class="card-text p-3 mt-1" style="min-height: 50px; background-color: #FAFAF8;">
           <%= comment.text %>
           <span style="float: right;">
             <% if comment.commentlikes.present? %>

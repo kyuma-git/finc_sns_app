@@ -9,13 +9,11 @@ class CommentsController < ApplicationController
 
   def create
     post = Post.find(params[:post_id])
-    unless post.blank?
-      @comment = post.comments.build(comment_params)
-      if @comment.save
-        redirect_to post_path(post), notice: 'コメントを投稿しました'
-      else
-        render :new
-      end
+    comment = post.comments.build(comment_params)
+    if comment.save
+      redirect_to posts_path
+    else
+      render :new
     end
   end
 
@@ -25,19 +23,18 @@ class CommentsController < ApplicationController
   end
 
   def update
-    @comment = Comment.find(params[:id])
-    if @comment.update(comment_params)
-      redirect_to posts_path, notice: '編集できました'
+    comment = Comment.find(params[:id])
+    if comment.update(comment_params)
+      redirect_to posts_path
     else
       render :edit
     end
   end
 
   def destroy
-    post = Post.find(params[:post_id])
-    @comment = Comment.find(params[:id])
-    @comment.destroy
-    redirect_to post_path(post), notice: '削除できました'
+    comment = Comment.find(params[:id])
+    comment.destroy
+    redirect_to posts_path
   end
 
   private
