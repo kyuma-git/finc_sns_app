@@ -5,14 +5,19 @@ class PostsController < ApplicationController
   def index
     if current_user
       @posts = current_user.feed.order(created_at: :desc)
-      @comment = Comment.all
     else
-      @posts = Post.all.order(created_at: :desc)
+      @posts = Post.where(publishing_policy: 1).order(created_at: :desc)
     end
   end
 
   def show
-    @post = Post.find(params[:id])
+    if current_user
+      @post = current_user.feed.find(params[:id])
+      @comments = @post.comments
+    else
+      @post = Post.where(publishing_policy: 1).find(params[:id])
+      @comments = @post.comments
+    end
   end
 
   def new
@@ -29,7 +34,7 @@ class PostsController < ApplicationController
   end
 
   def edit
-    @post = Post.find(params[:id])
+    @post = current_user.feed.find(params[:id])
   end
 
   #####################################
@@ -56,6 +61,7 @@ class PostsController < ApplicationController
     params.require(:post).permit(
       :text,
       :publishing_policy,
+      :image,
       :created_at,
       :updated_at
     ).merge(user_id: current_user.id)

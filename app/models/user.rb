@@ -30,6 +30,7 @@ class User < ApplicationRecord
   def feed
     following_ids = Relationship.where(follower_id: id).pluck(:followed_id)
     target_user_ids = following_ids << id
-    Post.where(user_id: target_user_ids)
+    user_ids = Post.where(user_id: id).pluck(:user_id)
+    user_ids[0].eql?(id) ? Post.where(user_id: target_user_ids) : Post.where(user_id: target_user_ids).where.not(publishing_policy: 3)
   end
 end

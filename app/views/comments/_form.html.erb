@@ -7,10 +7,6 @@
             <%= form.label :text, :class => 'require' %>
             <%= form.text_field :text %>
           </div>
-          <div class="field">
-            <%= form.label :publishing_policy %>
-            <%= form.select :publishing_policy, Comment.publishing_policies.keys,{selected: 'unlimited'} %>
-          </div>
           <div class="actions">
             <%= form.submit %>
           </div>
