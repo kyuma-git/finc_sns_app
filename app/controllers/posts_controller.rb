@@ -35,9 +35,9 @@ class PostsController < ApplicationController
   end
 
   def edit
-    @post = Post.find(params[:id])
-    unless author?(@post)
-      redirect_to post_path(@post)
+    post = Post.find(params[:id])
+    unless author?(post)
+      redirect_to post_path(post)
       flash[:alert] = '編集、削除の権限はありません'
     end
   end
@@ -53,9 +53,9 @@ class PostsController < ApplicationController
 
   def destroy
     post = Post.find(params[:id])
-    unless author?(@post)
-      redirect_to post_path(@post)
+    unless author?(post)
       flash[:alert] = '編集、削除の権限はありません'
+      return redirect_to post_path(post)
     end
     post.destroy
     redirect_to posts_url
