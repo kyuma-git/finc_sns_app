@@ -11,6 +11,9 @@ class Post < ApplicationRecord
 
   enum publishing_policy: { unlimited: 1, follower_limited: 2, self_limited: 3 }
 
+  scope :good_to_show_range, -> {where(created_at: Constants::GOOD_TO_SHOW_DAYS...Time.now)}
+  scope :my_posts, -> (user) {where(user_id: user.id)}
+
   def add_like(user)
     postlikes.create(user_id: user.id)
   end

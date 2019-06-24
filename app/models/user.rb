@@ -27,12 +27,11 @@ class User < ApplicationRecord
     following.include?(other_user)
   end
 
-  def fetch_following_user
-    following_ids = Relationship.where(follower_id: id).pluck(:followed_id)
+  def fetch_following_user_ids
+    Relationship.where(follower_id: id).pluck(:followed_id)
   end
 
-  def retrieve_posts
-    posts = Post.where(user_id: fetch_following_user)
-    posts.where.not(publishing_policy: :self_limited)
+  def fetch_following_user_posts
+    posts = Post.where(user_id: fetch_following_user_ids).where.not(publishing_policy: :self_limited)
   end
 end

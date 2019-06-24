@@ -4,15 +4,15 @@ class PostsController < ApplicationController
   before_action :check_user_login, only: %i[new edit delete]
   def index
     if current_user
-      logined_user_feed_posts
+      logged_in_user_feed_posts
     else
-      unlogined_user_feed_posts
+      unlogged_in_user_feed_posts
     end
   end
 
   def show
     if current_user
-      @post = logined_user_feed_posts.find(params[:id])
+      @post = logged_in_user_feed_posts.find(params[:id])
       @comments = @post.comments
     else
       @post = Post.where(publishing_policy: :unlimited).find(params[:id])
