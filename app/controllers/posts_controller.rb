@@ -4,25 +4,25 @@ class PostsController < ApplicationController
   before_action :check_user_login, only: %i[new edit delete]
   def index
     if current_user
-      @posts = current_user.feed.order(created_at: :desc)
+      logined_user_feed_posts
     else
-      @posts = Post.where(publishing_policy: 1).order(created_at: :desc)
+      unlogined_user_feed_posts
     end
   end
 
   def show
     if current_user
-      @post = current_user.feed.find(params[:id])
+      @post = logined_user_feed_posts.find(params[:id])
       @comments = @post.comments
     else
-      @post = Post.where(publishing_policy: 1).find(params[:id])
+      @post = Post.where(publishing_policy: :unlimited).find(params[:id])
       @comments = @post.comments
     end
   end
 
   def new
     @post = Post.new
-    3.times { @post.images.build }
+    Constants::IMAGE_MAX_LENGTH.times { @post.images.build }
   end
 
   def create
@@ -35,7 +35,11 @@ class PostsController < ApplicationController
   end
 
   def edit
-    @post = current_user.feed.find(params[:id])
+    @post = Post.find(params[:id])
+    unless author?(@post)
+      redirect_to post_path(@post)
+      flash[:alert] = '編集、削除の権限はありません'
+    end
   end
 
   def update
@@ -48,8 +52,12 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    @post = Post.find(params[:id])
-    @post.destroy
+    post = Post.find(params[:id])
+    unless author?(@post)
+      redirect_to post_path(@post)
+      flash[:alert] = '編集、削除の権限はありません'
+    end
+    post.destroy
     redirect_to posts_url
   end
 
@@ -61,7 +69,7 @@ class PostsController < ApplicationController
       :publishing_policy,
       :created_at,
       :updated_at,
-      images_attributes: [:image, :id]
+      images_attributes: %i[image id]
     ).merge(user_id: current_user.id)
   end
 end

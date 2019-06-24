@@ -1,3 +1,4 @@
+<%= render 'layouts/flash_messages' %>
 <div id="post_show_page" style="height: 100vh;">
   <div class="card m-2" style="width: 50%; min-height: 250px; position:relative; left: 25%;">
     <div class="card-body">
@@ -27,7 +28,7 @@
           <% end %>
         </div>
       </div>
-      <% @post.comments.each do |comment| %>
+      <% @comments.each do |comment| %>
         <div class="card-text p-3 mt-1" style="min-height: 50px; background-color: #FAFAF8;">
           <%= link_to user_path(comment.user) do %>
             <%= comment.user.name %>

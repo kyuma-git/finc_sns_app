@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ChangeImagesColumnName < ActiveRecord::Migration[5.2]
   def change
     rename_column :images, :img_url, :img_data
