@@ -6,6 +6,7 @@ class PostsController < ApplicationController
     if current_user
       @posts = current_user.feed.order(created_at: :desc)
       @comment = Comment.all
+      redirect_to admin_root_path if current_user.is_admin
     else
       @posts = Post.all.order(created_at: :desc)
     end
