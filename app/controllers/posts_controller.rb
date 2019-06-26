@@ -22,7 +22,7 @@ class PostsController < ApplicationController
 
   def new
     @post = Post.new
-    Constants::IMAGE_MAX_LENGTH.times { @post.images.build }
+    Post::IMAGE_MAX_LENGTH.times { @post.images.build }
   end
 
   def create
