@@ -1,11 +1,13 @@
-nav {
-  background-color: #ee3281;
-  p, span, strong, a {
-    color: white;
-  }
-  .dropdown-item {
-    a{
-      color: black !important;
+.header {
+  nav {
+    background-color: #ee3281;
+    p, span, strong, a {
+      color: white;
+    }
+    .dropdown-item {
+      a{
+        color: black !important;
+      }
     }
   }
 }

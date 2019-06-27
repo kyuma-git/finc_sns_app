@@ -1,38 +1,40 @@
-<nav class="p-3">
-  <div class="d-flex flex-row">
-    <span class="navbar-brand" style="position: relative; left: 26%;">
-      <%= link_to 'FINC SNS', root_path %>
-    </span>
-    <ul class="navbar-nav">
-      <% if current_user %>
-        <li class="nav-item" style="margin-top: 8px;">
-          <% unless current_user.is_admin %>
-            <span class="p-2" style="position: absolute; right: 15px;"><%= link_to '今何してる？', new_post_path %></span>
-          <% end %>
-        </li>
-        <li class="nav-item dropdown" style="position: absolute; right: 25%;">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <%= current_user.name %>
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <span class="dropdown-item"><%= link_to 'プロフィール変更', edit_user_registration_path %></span>
-            <span class="dropdown-item"><%= link_to 'ログアウト', destroy_user_session_path, method: :delete %></span>
+<div class="header">
+  <nav class="p-3">
+    <div class="d-flex flex-row">
+      <span class="navbar-brand" style="position: relative; left: 26%;">
+        <%= link_to 'FINC SNS', root_path %>
+      </span>
+      <ul class="navbar-nav">
+        <% if current_user %>
+          <li class="nav-item" style="margin-top: 8px;">
+            <% unless current_user.is_admin %>
+              <span class="p-2" style="position: absolute; right: 15px;"><%= link_to '今何してる？', new_post_path %></span>
+            <% end %>
+          </li>
+          <li class="nav-item dropdown" style="position: absolute; right: 25%;">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <%= current_user.name %>
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <span class="dropdown-item"><%= link_to 'プロフィール変更', edit_user_registration_path %></span>
+              <span class="dropdown-item"><%= link_to 'ログアウト', destroy_user_session_path, method: :delete %></span>
+            </div>
+          </li>
+        <% else %>
+          <div style="position: absolute; right: 20px;">
+            <li class="nav-item" style="display: inline;">
+              <%= link_to(new_user_registration_path) do %>
+                <button>Sign In</button>
+              <% end %>
+            </li>
+            <li class="nav-item" style="display: inline;">
+              <%= link_to(new_user_session_path) do %>
+                <button>Log In</button>
+              <% end %>
+            </li>
           </div>
-        </li>
-      <% else %>
-        <div style="position: absolute; right: 20px;">
-          <li class="nav-item" style="display: inline;">
-            <%= link_to(new_user_registration_path) do %>
-              <button>Sign In</button>
-            <% end %>
-          </li>
-          <li class="nav-item" style="display: inline;">
-            <%= link_to(new_user_session_path) do %>
-              <button>Log In</button>
-            <% end %>
-          </li>
-        </div>
-      <% end %>
-    </ul>
-  </div>
-</nav>
+        <% end %>
+      </ul>
+    </div>
+  </nav>
+</div>
