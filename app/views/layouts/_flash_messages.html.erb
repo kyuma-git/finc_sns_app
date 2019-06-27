@@ -1,0 +1,6 @@
+<!-- フラッシュメッセージを表示させるパーシャル -->
+<% flash.each do |message_type, message| %>
+  <div class="alert" style="background-color: #F9DBD6;">
+    <%= message %>
+  </div>
+<% end %>

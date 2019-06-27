@@ -11,20 +11,26 @@
         </div>
         <div class="col-md-2">
           <%= link_to(post_path(post)) do %>
+            <%= post.publishing_policy %>
             <button type="button" class="btn btn-light" style="font-size: 10px;">詳細</button>
           <% end %>
         </div>
       </div>
+      <% post.images.each do |image| %>
+        <%= image_tag(image.image_url(:small)) %>
+      <% end %>
       <div class="card-text p-3 mt-1 bg-light" style="min-height: 180px;"><%= post.text %></div>
       <% count_comments = post.comments.length %>
-      <% if count_comments > 1 %>
+      <% if count_comments > 0 %>
         <span>
           <%= count_comments %>
           件のコメント
         </span>
         <%= link_to 'コメントを表示', post_path(post) %>
       <% end %>
-      <%= link_to 'コメントを追加', new_post_comment_path(post) %>
+      <% if current_user %>
+        <%= link_to 'コメントを追加', new_post_comment_path(post) %>
+      <% end %>
     </div>
   </div>
 <% end %>

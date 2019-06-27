@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_190_618_091_108) do
+ActiveRecord::Schema.define(version: 20_190_620_100_559) do
   create_table 'commentlikes', force: :cascade do |t|
     t.integer 'user_id'
     t.integer 'comment_id'
@@ -32,10 +32,11 @@ ActiveRecord::Schema.define(version: 20_190_618_091_108) do
   end
 
   create_table 'images', force: :cascade do |t|
-    t.string 'img_url', null: false
-    t.integer 'post_id', null: false
+    t.string 'image_data', null: false
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
+    t.integer 'post_id'
+    t.index ['post_id'], name: 'index_images_on_post_id'
   end
 
   create_table 'likes', force: :cascade do |t|

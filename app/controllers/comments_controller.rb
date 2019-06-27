@@ -8,10 +8,10 @@ class CommentsController < ApplicationController
   end
 
   def create
-    post = Post.find(params[:post_id])
-    comment = post.comments.build(comment_params)
+    @post = Post.find(params[:post_id])
+    comment = @post.comments.build(comment_params)
     if comment.save
-      redirect_to posts_path
+      redirect_to post_path(@post)
     else
       render :new
     end
@@ -19,12 +19,21 @@ class CommentsController < ApplicationController
 
   def edit
     post = Post.find(params[:post_id])
-    @comment = Comment.find(params[:id])
+    @comment = post.comments.find(params[:id])
+    unless author?(@comment)
+      redirect_to post_path(post)
+      flash[:alert] = '編集、削除の権限はありません'
+    end
   end
 
   def update
-    comment = Comment.find(params[:id])
-    if comment.update(comment_params)
+    post = Post.find(params[:post_id])
+    @comment = Comment.find(params[:id])
+    unless author?(@comment)
+      redirect_to post_path(post)
+      flash[:alert] = '編集、削除の権限はありません'
+    end
+    if @comment.update(comment_params)
       redirect_to posts_path
     else
       render :edit
@@ -32,8 +41,13 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    comment = Comment.find(params[:id])
-    comment.destroy
+    post = Post.find(params[:post_id])
+    @comment = post.comments.find(params[:id])
+    unless author?(@comment)
+      flash[:alert] = '編集、削除の権限はありません'
+      return redirect_to post_path(post)
+    end
+    @comment.destroy
     redirect_to posts_path
   end
 
@@ -42,7 +56,6 @@ class CommentsController < ApplicationController
   def comment_params
     params.require(:comment).permit(
       :text,
-      :publishing_policy,
       :post_id,
       :created_at,
       :updated_at
