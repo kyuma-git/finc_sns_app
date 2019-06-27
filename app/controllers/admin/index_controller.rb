@@ -2,7 +2,7 @@
 
 class Admin::IndexController < ApplicationController
   def index
-    @users = User.where.not(is_admin: true)
+    @users = User.where(is_admin: false)
   end
 
   def show
