@@ -6,6 +6,8 @@ class Comment < ApplicationRecord
 
   has_many :commentlikes, dependent: :destroy
 
+  validates :text, presence: true
+
   enum publishing_policy: { unlimited: 1, friend_limited: 2, self_limited: 3 }
 
   def add_like(user)

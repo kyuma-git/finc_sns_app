@@ -4,20 +4,25 @@ class PostsController < ApplicationController
   before_action :check_user_login, only: %i[new edit delete]
   def index
     if current_user
-      @posts = current_user.feed.order(created_at: :desc)
-      @comment = Comment.all
-      redirect_to admin_root_path if current_user.is_admin
+      logged_in_user_feed_posts
     else
-      @posts = Post.all.order(created_at: :desc)
+      unlogged_in_user_feed_posts
     end
   end
 
   def show
-    @post = Post.find(params[:id])
+    if current_user
+      @post = logged_in_user_feed_posts.find(params[:id])
+      @comments = @post.comments
+    else
+      @post = Post.where(publishing_policy: :unlimited).find(params[:id])
+      @comments = @post.comments
+    end
   end
 
   def new
     @post = Post.new
+    Post::IMAGE_MAX_LENGTH.times { @post.images.build }
   end
 
   def create
@@ -31,13 +36,18 @@ class PostsController < ApplicationController
 
   def edit
     @post = Post.find(params[:id])
+    unless author?(@post)
+      redirect_to post_path(@post)
+      flash[:alert] = '編集、削除の権限はありません'
+    end
   end
 
-  #####################################
-  # Todo: Like機能作成後、ポスト・コメントの削除でLikeが削除されるか確認
-  #####################################
   def update
     @post = Post.find(params[:id])
+    unless author?(@post)
+      redirect_to post_path(@post)
+      flash[:alert] = '編集、削除の権限はありません'
+    end
     if @post.update(post_params)
       redirect_to @post
     else
@@ -46,8 +56,12 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    @post = Post.find(params[:id])
-    @post.destroy
+    post = Post.find(params[:id])
+    unless author?(post)
+      flash[:alert] = '編集、削除の権限はありません'
+      return redirect_to post_path(post)
+    end
+    post.destroy
     redirect_to posts_url
   end
 
@@ -58,7 +72,8 @@ class PostsController < ApplicationController
       :text,
       :publishing_policy,
       :created_at,
-      :updated_at
+      :updated_at,
+      images_attributes: %i[image id]
     ).merge(user_id: current_user.id)
   end
 end
