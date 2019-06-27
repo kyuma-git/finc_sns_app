@@ -1,0 +1,26 @@
+.scaffold_table {
+  margin: 50px;
+  text-align: center;
+  a {
+    color: #ee3281;
+
+    &:visited {
+      color: #ee3281;
+    }
+
+    &:hover {
+      color: #fff;
+      background-color: #ee3281;
+    }
+  }
+  th {
+    border: 1px #666 solid;
+    padding: 5px;
+    background-color: #ddd;
+    text-align: center;
+  }
+  td {
+    border: 1px #666 solid;
+    padding: 5px;
+  }
+}

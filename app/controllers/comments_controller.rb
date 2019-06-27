@@ -27,7 +27,12 @@ class CommentsController < ApplicationController
   end
 
   def update
+    post = Post.find(params[:post_id])
     @comment = Comment.find(params[:id])
+    unless author?(@comment)
+      redirect_to post_path(post)
+      flash[:alert] = '編集、削除の権限はありません'
+    end
     if @comment.update(comment_params)
       redirect_to posts_path
     else
