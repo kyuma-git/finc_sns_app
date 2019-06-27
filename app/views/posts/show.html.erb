@@ -41,8 +41,12 @@
             <% else %>
               <%= button_to 'いいね', post_comment_comment_likes_path(@post, comment), method: :post %>
             <% end %>
-            <%= link_to '編集', edit_post_comment_path(@post, comment) %>
-            <%= link_to '削除', post_comment_path(@post, comment), method: :delete, data: { confirm: '本当に削除しますか？' } %>
+            <% if current_user %>
+              <% if comment.user_id == current_user.id %>
+                <%= link_to '編集', edit_post_comment_path(@post, comment) %>
+                <%= link_to '削除', post_comment_path(@post, comment), method: :delete, data: { confirm: '本当に削除しますか？' } %>
+              <% end %>
+            <% end %>
           </span>
         </div>
       <% end %>
