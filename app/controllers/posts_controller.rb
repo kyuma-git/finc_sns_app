@@ -4,9 +4,10 @@ class PostsController < ApplicationController
   before_action :check_user_login, only: %i[new edit delete]
   def index
     if current_user
-      logged_in_user_feed_posts
+      @posts = logged_in_user_feed_posts
+      # render json: @posts
     else
-      unlogged_in_user_feed_posts
+      @posts = unlogged_in_user_feed_posts
     end
   end
 

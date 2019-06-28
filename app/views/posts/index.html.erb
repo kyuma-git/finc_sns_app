@@ -19,7 +19,7 @@
       <% post.images.each do |image| %>
         <%= image_tag(image.image_url(:small)) %>
       <% end %>
-      <div class="card-text p-3 mt-1 bg-light" style="min-height: 180px;"><%= post.text %></div>
+      <div class="card-text p-3 mt-1 bg-light" style="min-height: 180px;" id="post_text"><%= post.text %></div>
       <% count_comments = post.comments.length %>
       <% if count_comments > 0 %>
         <span>
@@ -34,6 +34,9 @@
     </div>
   </div>
 <% end %>
+
+<div id="posts"></div>
+
 <div style="text-align: center;">
-  <%= paginate @posts, :class => 'pagenation_bar' %>
+  <%= link_to "次のページを読み込む", api_fetch_a_page_of_posts_path, {id: "next", remote: true} %>
 </div>

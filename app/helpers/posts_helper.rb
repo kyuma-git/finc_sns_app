@@ -8,10 +8,10 @@ module PostsHelper
 
   def logged_in_user_feed_posts
     following_posts = current_user.fetch_following_user_posts
-    @posts = Post.my_posts(current_user).or(following_posts).order(created_at: :desc).page(params[:page])
+    Post.my_posts(current_user).or(following_posts).order(created_at: :desc).page(params[:page])
   end
 
   def unlogged_in_user_feed_posts
-    @posts = Post.where(publishing_policy: :unlimited).order(created_at: :desc)
+    Post.where(publishing_policy: :unlimited).order(created_at: :desc).page(params[:page])
   end
 end

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  namespace :api do
-    get "fetch_a_page_of_posts", to: "posts#fetch_a_page_of_posts"
+  namespace :api, { format: 'json' } do
+    get "fetch_a_page_of_posts", to: "fetch_posts#fetch_a_page_of_posts"
   end
   
   namespace :admin do
