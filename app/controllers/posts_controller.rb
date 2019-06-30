@@ -5,7 +5,6 @@ class PostsController < ApplicationController
   def index
     if current_user
       @posts = logged_in_user_feed_posts
-      # render json: @posts
     else
       @posts = unlogged_in_user_feed_posts
     end

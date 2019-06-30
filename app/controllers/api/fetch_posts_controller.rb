@@ -5,6 +5,9 @@ class Api::FetchPostsController < ApplicationController
     else
        @posts = unlogged_in_user_feed_posts
     end
-    render json: @posts
+    respond_to do |format|
+      format.html
+      format.json { render json: @posts}
+    end
   end
 end

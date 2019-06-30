@@ -10,8 +10,8 @@
           </strong>
         </div>
         <div class="col-md-2">
+          <%= post.publishing_policy %>
           <%= link_to(post_path(post)) do %>
-            <%= post.publishing_policy %>
             <button type="button" class="btn btn-light" style="font-size: 10px;">詳細</button>
           <% end %>
         </div>

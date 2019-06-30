@@ -8,8 +8,8 @@ $(function () {
           return response.json();
         })
         .then(function (posts) {
+          console.log(posts);
           for (let post of posts) {
-            console.log(post);
             $(
               '<div class="card m-2" style="width: 50%; min-height: 250px; position:relative; left: 25%;">' +
                 '<div class="card-body">' +
@@ -17,12 +17,15 @@ $(function () {
                     '<div class="col-md-10">' +
                       '<div class="card-title mb-2">' +
                         '<span>' +
-                          post.id +
+                          post.user.name +
                         '</span>' +
                       '</div>' +
                     '</div>' +
                     '<div class="col-md-2">' +
-                      '<button type="button" class="btn btn-light" style="font-size: 10px;">' +
+                    '<span>' +
+                      post.publishing_policy +
+                    '</span>' +
+                      '<button type="button" class="post-btn btn btn-light" style="font-size: 10px;">' +
                         '詳細' +
                       '</button>' +
                     '</div>' +
@@ -30,6 +33,9 @@ $(function () {
                   '<div class="card-text p-3 mt-1 bg-light" style="min-height: 180px;" id="post_text">' +
                     post.text +
                   '</div>' +
+                  '' +
+                  '' +
+                  '' +
                 '</div>' +
               '</div>' +
               '' +
@@ -37,6 +43,8 @@ $(function () {
               '' +
               '' +
               '' +
+
+
 
 
                 
