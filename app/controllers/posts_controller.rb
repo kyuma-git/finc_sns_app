@@ -36,6 +36,7 @@ class PostsController < ApplicationController
 
   def edit
     @post = Post.find(params[:id])
+    Post::IMAGE_MAX_LENGTH.times { @post.images.build }
     unless author?(@post)
       redirect_to post_path(@post)
       flash[:alert] = '編集、削除の権限はありません'
