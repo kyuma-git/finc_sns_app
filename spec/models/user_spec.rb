@@ -61,5 +61,9 @@ RSpec.describe User, type: :model do
       user.valid?
       expect(user.errors[:email]).to include('has already been taken')
     end
+
+    it "has a valid factory" do
+      expect(FactoryBot.build(:user)).to be_valid
+    end
   end
 end
