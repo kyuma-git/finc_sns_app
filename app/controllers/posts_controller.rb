@@ -5,6 +5,8 @@ class PostsController < ApplicationController
   def index
     if current_user
       @posts = logged_in_user_feed_posts
+      @post = Post.new
+      Post::IMAGE_MAX_LENGTH.times { @post.images.build }
     else
       @posts = unlogged_in_user_feed_posts
     end
@@ -28,9 +30,10 @@ class PostsController < ApplicationController
   def create
     @post = Post.new(post_params)
     if @post.save
-      redirect_to @post
+      render json: @post, status: 200
     else
-      render :new
+      @errors = @post.errors.full_messages
+      render json: @errors, status: 422
     end
   end
 

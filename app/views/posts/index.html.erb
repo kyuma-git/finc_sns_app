@@ -1,3 +1,7 @@
+<div>
+  <%= render 'form', post: @post %>
+</div>
+<div id="new_post"></div>
 <% @posts.each do |post| %>
   <div class="card m-2" style="width: 50%; min-height: 250px; position:relative; left: 25%;">
     <div class="card-body">

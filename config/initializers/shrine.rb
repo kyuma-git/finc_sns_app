@@ -11,4 +11,3 @@ Shrine.storages = {
 
 # プラグイン
 Shrine.plugin :activerecord
-Shrine.plugin :cached_attachment_data
