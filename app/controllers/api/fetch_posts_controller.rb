@@ -1,10 +1,10 @@
 class Api::FetchPostsController < ApplicationController
   def fetch_a_page_of_posts
     if current_user
-      @posts = logged_in_user_feed_posts
+      posts = logged_in_user_feed_posts
     else
-       @posts = unlogged_in_user_feed_posts
+      posts = unlogged_in_user_feed_posts
     end
-    render json: @posts
+    render json: posts
   end
 end
