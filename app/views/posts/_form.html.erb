@@ -1,4 +1,4 @@
-<%= form_for(post, data: { remote: true }) do |f| %>
+<%= form_for(post, data: { remote: true }, :html => {:class => "post-create"}) do |f| %>
   <div class="card m-2" style="width: 50%; min-height: 250px; position:relative; left: 25%; background-color: #FFECF9;">
       <div class="card-body">
         <div class="field m-2">
@@ -12,7 +12,7 @@
           <%= f.select :publishing_policy, Post.publishing_policies.keys,{selected: 'unlimited'} %>
           </div>
         <div class="actions">
-          <%= f.submit %>
+          <%= f.submit 'post' %>
         </div>
       </div>
   </div>

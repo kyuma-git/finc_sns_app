@@ -1,12 +1,19 @@
 $(function () {
-  $(document).on('ajax:success', 'form', function (e) {
-    fetch(`http://localhost:3000/api/get_new_post`)
+  $(document).on('ajax:success', 'form', function () {
+    var formdata = new FormData(this);
+    let url = `http://localhost:3000/posts`
+    fetch(url, {
+      method: 'POST',
+      body: formdata,
+    })
       .then(function (response) {
-        return response.json();
+        return response.text();
       })
-      .then(function (post) {
+      .then(function (post_data) {
+        post = JSON.parse(post_data)
         post_url = `http://localhost:3000/posts/${post.id}`
         posted_user_url = `http://localhost:3000/users/${post.user_id}`
+        image_data = JSON.parse(post.images[0].image_data).small.id
         $(
           '<div class="card m-2" style="width: 50%; min-height: 250px; position:relative; left: 25%;">' +
           '<div class="card-body">' +
@@ -14,7 +21,7 @@ $(function () {
           '<div class="col-md-10">' +
           '<div class="card-title mb-2">' +
           '<a href="' + posted_user_url + '">' +
-            post.user.name +
+          post.user.name +
           '</a>' +
           '</div>' +
           '</div>' +
@@ -26,7 +33,7 @@ $(function () {
           '</a>' +
           '</div>' +
           '</div>' +
-          '<img src="/uploads/store/' + image_url + '"/>' +
+          '<img src="/uploads/store/' + image_data + '"/>' +
           '<div class="card-text p-3 mt-1 bg-light" style="min-height: 180px;" id="post_text">' +
           post.text +
           '</div>' +
@@ -34,15 +41,9 @@ $(function () {
           '</div>'
         ).appendTo('#new_post')
       });
-    fetch(`http://localhost:3000/api/get_post_image_url`)
-      .then(function (response) {
-        return response.json();
-      })
-      .then(function (images) {
-        image_url = images.small.id
-      });
-  });
-  $(document).on('ajax:error', 'form', function (e) {
+      $('.post-create')[0].reset();
+  })
+  $(document).on('ajax:error', 'form', function () {
     alert('テキストを入力してください');
   });
 });

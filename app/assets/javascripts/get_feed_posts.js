@@ -9,7 +9,7 @@ $(function () {
       })
       .then(function (posts) {
         for (let post of posts) {
-          post_url = `http://localhost:3000/posts/${post.id}`
+          post_url = `http://localhost:3000/posts/${post.id}`   
           posted_user_url = `http://localhost:3000/users/${post.user_id}`
           $(
             '<div class="card m-2" style="width: 50%; min-height: 250px; position:relative; left: 25%;">' +
