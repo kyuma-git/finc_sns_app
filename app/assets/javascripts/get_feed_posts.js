@@ -5,7 +5,15 @@ $(function () {
       page++;
       fetch(`http://localhost:3000/api/fetch_a_page_of_posts?page=${page}`)
       .then(function (response) {
-        return response.json();
+        if (!response.ok) {
+          try {
+            throw new Error('レスポンスの取得に失敗');
+          } catch (e) {
+            console.log(e.name + ': ' + e.message);
+          }
+        } else {
+          return response.json();
+        }
       })
       .then(function (posts) {
         for (let post of posts) {
