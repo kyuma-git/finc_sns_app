@@ -3,11 +3,7 @@ require 'rails_helper'
 RSpec.describe Post, type: :model do
   describe Post do
     before do
-      @user = User.create(
-        name: "mr.spec",
-        email: "mr@spec.com",
-        password: "password"
-      )
+      @user = FactoryBot.create(:user)
     end
     it "is valid with a text, user_id" do
       post = Post.new(
