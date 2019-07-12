@@ -5,7 +5,7 @@ class PostsController < ApplicationController
   before_action :check_user_login, only: %i[new edit delete]
   def index
     if current_user
-      @posts = Post.new().logged_in_user_feed_posts(current_user).page(params[:page])
+      @posts = Post.new().logged_in_user_feed_posts(current_user).page(params[:page]).includes(:user, :images)
       @post = Post.new
       Post::IMAGE_MAX_LENGTH.times { @post.images.build }
     else
