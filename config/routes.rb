@@ -1,6 +1,12 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  namespace :api, { format: 'json' } do
+    get "fetch_a_page_of_posts", to: "fetch_posts#fetch_a_page_of_posts"
+    get "get_new_post", to: "get_new_post#get_new_post"
+    get "get_post_image_url", to: "get_new_post#get_post_image_url"
+  end
+  
   namespace :admin do
     root to: 'index#index'
     resources :index, only: %i[index show]

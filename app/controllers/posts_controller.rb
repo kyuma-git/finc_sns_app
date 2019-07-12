@@ -4,9 +4,11 @@ class PostsController < ApplicationController
   before_action :check_user_login, only: %i[new edit delete]
   def index
     if current_user
-      logged_in_user_feed_posts
+      @posts = logged_in_user_feed_posts
+      @post = Post.new
+      Post::IMAGE_MAX_LENGTH.times { @post.images.build }
     else
-      unlogged_in_user_feed_posts
+      @posts = unlogged_in_user_feed_posts
     end
   end
 
@@ -28,14 +30,16 @@ class PostsController < ApplicationController
   def create
     @post = Post.new(post_params)
     if @post.save
-      redirect_to @post
+      render json: @post, status: 200
     else
-      render :new
+      @errors = @post.errors.full_messages
+      render json: @errors, status: 422
     end
   end
 
   def edit
     @post = Post.find(params[:id])
+    Post::IMAGE_MAX_LENGTH.times { @post.images.build }
     unless author?(@post)
       redirect_to post_path(@post)
       flash[:alert] = '編集、削除の権限はありません'

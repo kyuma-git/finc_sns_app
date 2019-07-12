@@ -1,3 +1,9 @@
+<% if current_user %>
+  <div>
+    <%= render 'form', post: @post %>
+  </div>
+  <div id="new_post"></div>
+<% end %>
 <% @posts.each do |post| %>
   <div class="card m-2" style="width: 50%; min-height: 250px; position:relative; left: 25%;">
     <div class="card-body">
@@ -11,7 +17,6 @@
         </div>
         <div class="col-md-2">
           <%= link_to(post_path(post)) do %>
-            <%= post.publishing_policy %>
             <button type="button" class="btn btn-light" style="font-size: 10px;">詳細</button>
           <% end %>
         </div>
@@ -19,18 +24,11 @@
       <% post.images.each do |image| %>
         <%= image_tag(image.image_url(:small)) %>
       <% end %>
-      <div class="card-text p-3 mt-1 bg-light" style="min-height: 180px;"><%= post.text %></div>
-      <% count_comments = post.comments.length %>
-      <% if count_comments > 0 %>
-        <span>
-          <%= count_comments %>
-          件のコメント
-        </span>
-        <%= link_to 'コメントを表示', post_path(post) %>
-      <% end %>
-      <% if current_user %>
-        <%= link_to 'コメントを追加', new_post_comment_path(post) %>
-      <% end %>
+      <div class="card-text p-3 mt-1 bg-light" style="min-height: 180px;" id="post_text"><%= post.text %></div>
     </div>
   </div>
 <% end %>
+<div id="posts"></div>
+<div style="text-align: center;">
+  <%= link_to "次のページを読み込む", api_fetch_a_page_of_posts_path, {id: "next", remote: true} %>
+</div>

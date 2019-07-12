@@ -15,6 +15,8 @@ class User < ApplicationRecord
   has_many :postlikes, dependent: :destroy
   has_many :commentlikes, dependent: :destroy
 
+  validates :name, :email, :password, presence: true
+
   def follow(other_user)
     active_relationships.create(followed_id: other_user.id)
   end

@@ -7,7 +7,7 @@ class Post < ApplicationRecord
   has_many :images, dependent: :destroy
   accepts_nested_attributes_for :images
 
-  validates :text, presence: true
+  validates :text, presence: true, length: { maximum: 140 }
 
   enum publishing_policy: { unlimited: 1, follower_limited: 2, self_limited: 3 }
 
