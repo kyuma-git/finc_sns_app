@@ -20,4 +20,17 @@ class Post < ApplicationRecord
   def delete_like(user)
     postlikes.find_by(user_id: user.id).destroy
   end
+
+  def author?(post, user)
+    user.id == post.user_id
+  end
+
+  def logged_in_user_feed_posts(user)
+    following_posts = user.fetch_following_user_posts
+    Post.my_posts(user).or(following_posts).order(created_at: :desc)
+  end
+
+  def unlogged_in_user_feed_posts
+    Post.where(publishing_policy: :unlimited).order(created_at: :desc)
+  end
 end

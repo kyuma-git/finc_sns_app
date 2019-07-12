@@ -20,21 +20,21 @@ class CommentsController < ApplicationController
   def edit
     post = Post.find(params[:post_id])
     @comment = post.comments.find(params[:id])
-    unless author?(@comment)
+    unless @comment.author?(@comment, current_user)
       redirect_to post_path(post)
       flash[:alert] = '編集、削除の権限はありません'
     end
   end
 
   def update
-    post = Post.find(params[:post_id])
+    post = Post.find(params[:id])
     @comment = Comment.find(params[:id])
-    unless author?(@comment)
+    unless @comment.author?(@comment, current_user)
       redirect_to post_path(post)
       flash[:alert] = '編集、削除の権限はありません'
     end
     if @comment.update(comment_params)
-      redirect_to posts_path
+      redirect_to post
     else
       render :edit
     end
@@ -43,7 +43,7 @@ class CommentsController < ApplicationController
   def destroy
     post = Post.find(params[:post_id])
     @comment = post.comments.find(params[:id])
-    unless author?(@comment)
+    unless @comment.author?(@comment, current_user)
       flash[:alert] = '編集、削除の権限はありません'
       return redirect_to post_path(post)
     end
