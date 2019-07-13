@@ -2,7 +2,7 @@
 
 class UsersController < ApplicationController
   def index
-    @users = User.where.not(id: current_user.id).includes(:passive_relationships)
+    @users = User.where.not(is_admin: true)
   end
 
   def show
