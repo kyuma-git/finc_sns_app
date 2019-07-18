@@ -1,0 +1,7 @@
+AllCops:
+  Exclude:
+    - 'gemfiles/*'
+Metrics/LineLength:
+  Max: 100
+  Exclude:
+    - 'spec/**/*'

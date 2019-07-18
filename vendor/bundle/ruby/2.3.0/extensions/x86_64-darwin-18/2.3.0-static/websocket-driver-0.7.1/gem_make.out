@@ -1,0 +1,15 @@
+current directory: /Users/kyuma.morita/Codes/apps/finc_sns_app/vendor/bundle/ruby/2.3.0/gems/websocket-driver-0.7.1/ext/websocket-driver
+/Users/kyuma.morita/.rbenv/versions/2.3.7/bin/ruby -I /Users/kyuma.morita/.rbenv/versions/2.3.7/lib/ruby/site_ruby/2.3.0 -r ./siteconf20190718-2036-1edirbp.rb extconf.rb
+creating Makefile
+
+current directory: /Users/kyuma.morita/Codes/apps/finc_sns_app/vendor/bundle/ruby/2.3.0/gems/websocket-driver-0.7.1/ext/websocket-driver
+make "DESTDIR=" clean
+
+current directory: /Users/kyuma.morita/Codes/apps/finc_sns_app/vendor/bundle/ruby/2.3.0/gems/websocket-driver-0.7.1/ext/websocket-driver
+make "DESTDIR="
+compiling websocket_mask.c
+linking shared-object websocket_mask.bundle
+
+current directory: /Users/kyuma.morita/Codes/apps/finc_sns_app/vendor/bundle/ruby/2.3.0/gems/websocket-driver-0.7.1/ext/websocket-driver
+make "DESTDIR=" install
+/usr/local/bin/ginstall -c -m 0755 websocket_mask.bundle ./.gem.20190718-2036-rfvy01

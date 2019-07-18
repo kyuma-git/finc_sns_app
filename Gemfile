@@ -58,6 +58,7 @@ group :development do
   gem 'pry-rails'
   gem 'awesome_print'
   gem 'hirb'
+  gem "lol_dba"
 end
 
 group :test do
