@@ -1,20 +1,21 @@
 # frozen_string_literal: true
+require "post.rb"
 
 class PostsController < ApplicationController
   before_action :check_user_login, only: %i[new edit delete]
   def index
     if current_user
-      @posts = logged_in_user_feed_posts
+      @posts = Post.new().logged_in_user_feed_posts(current_user).page(params[:page]).includes(:user, :images)
       @post = Post.new
       Post::IMAGE_MAX_LENGTH.times { @post.images.build }
     else
-      @posts = unlogged_in_user_feed_posts
+      @posts = Post.new().unlogged_in_user_feed_posts.page(params[:page])
     end
   end
 
   def show
     if current_user
-      @post = logged_in_user_feed_posts.find(params[:id])
+      @post = Post.new().logged_in_user_feed_posts(current_user).find(params[:id])
       @comments = @post.comments
     else
       @post = Post.where(publishing_policy: :unlimited).find(params[:id])
@@ -40,7 +41,7 @@ class PostsController < ApplicationController
   def edit
     @post = Post.find(params[:id])
     Post::IMAGE_MAX_LENGTH.times { @post.images.build }
-    unless author?(@post)
+    unless @post.author?(@post, current_user)
       redirect_to post_path(@post)
       flash[:alert] = '編集、削除の権限はありません'
     end
@@ -48,7 +49,7 @@ class PostsController < ApplicationController
 
   def update
     @post = Post.find(params[:id])
-    unless author?(@post)
+    unless @post.author?(@post, current_user)
       redirect_to post_path(@post)
       flash[:alert] = '編集、削除の権限はありません'
     end
@@ -61,7 +62,7 @@ class PostsController < ApplicationController
 
   def destroy
     post = Post.find(params[:id])
-    unless author?(post)
+    unless post.author?(post, current_user)
       flash[:alert] = '編集、削除の権限はありません'
       return redirect_to post_path(post)
     end

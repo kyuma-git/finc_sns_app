@@ -1,9 +1,12 @@
 <div class="header">
   <nav class="p-3">
     <div class="d-flex flex-row">
-      <span class="navbar-brand" style="position: relative; left: 26%;">
-        <%= link_to 'FINC SNS', root_path %>
-      </span>
+      <div style="position: relative; left: 26%;">
+        <span class="navbar-brand">
+          <%= link_to 'FINC SNS', root_path %>
+        </span>
+        <%= link_to 'ユーザ一覧', users_path %>
+      </div>
       <ul class="navbar-nav">
         <% if current_user %>
           <li class="nav-item dropdown" style="position: absolute; right: 25%;">

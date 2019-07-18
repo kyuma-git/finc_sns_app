@@ -1,0 +1,33 @@
+<% @users.each do |user| %>
+  <div class="card m-2" style="width: 40%; min-height: 50px; position:relative; left: 25%;">
+    <div class="card-body">
+      <div class="row" style="padding: 0 16px;">
+        <div class="col-md-8">
+          <strong class="card-title mb-2">
+              <%= user.name %>
+          </strong>
+        </div>
+        <div class="col-md-4">
+        <% if user.id.equal?(current_user.id) %>
+          <%= link_to 'プロフィール', user_path(current_user), :class => 'btn btn-large btn-primary' %>
+        <% else %>
+          <% if current_user.following?(user) %>
+            <%= form_for(current_user.active_relationships.find_by!(followed_id: user.id), html: { method: :delete }) do |f| %>
+              <div><%= f.hidden_field :followed_id %></div>
+              <%= f.submit "フォロー解除", class: "btn btn-large btn-primary" %>
+            <% end %>
+          <% else %>
+            <%= form_for(current_user.active_relationships.build(followed_id: user.id)) do |f| %>
+              <div><%= f.hidden_field :followed_id %></div>
+              <%= f.submit "フォローする", class: "btn btn-large btn-primary" %>
+            <% end %>
+          <% end %>
+        <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+<span>
+    <%= link_to 'ホームへ戻る', posts_path %>
+</span>

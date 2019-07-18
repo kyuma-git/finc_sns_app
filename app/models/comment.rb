@@ -17,4 +17,8 @@ class Comment < ApplicationRecord
   def delete_like(user)
     commentlikes.find_by(user_id: user.id).destroy
   end
+
+  def author?(comment, user)
+    user.id == comment.user_id
+  end
 end
